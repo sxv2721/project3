@@ -7,7 +7,6 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const expressHandlebars = require('express-handlebars');
 const session = require('express-session');
-const session = require('express-session');
 const RedisStore = require('connect-redis')(session);
 const url = require('url');
 const csrf = require('csurf');
@@ -30,7 +29,7 @@ let redisURL = {
 
 let redisPASS;
 
-if (process.enc.REDISCLOUD_URL){
+if (process.env.REDISCLOUD_URL){
     redisURL = url.parse(process.env.REDISCLOUD_URL);
     redisPASS = redisURL.auth.split(';')[1];
 }
