@@ -97,6 +97,12 @@ var DomoForm = function DomoForm(props) {
             "Age: "
         ),
         React.createElement("input", { id: "domoAge", type: "text", name: "age", placeholder: "Domo Age" }),
+        React.createElement(
+            "label",
+            { htmlFor: "cuteness" },
+            "Cuteness: "
+        ),
+        React.createElement("input", { id: "domoCuteness", type: "text", name: "cuteness", placeholder: "Domo Cuteness" }),
         React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
         React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
     );
