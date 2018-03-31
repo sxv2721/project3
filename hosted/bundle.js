@@ -5,10 +5,12 @@ var handleDomo = function handleDomo(e) {
 
     $("#domoMessage").animate({ width: 'hide' }, 350);
 
-    if ($("#domoName").val() == '' || $("#domoAge").val() == '') {
+    if ($("#domoName").val() == '' || $("#domoAge").val() == '' || $("#domoCuteness") == '') {
         handleError("RAWR~ All fields are required");
         return false;
     }
+
+    //console.log($("input[name=_csrf]").val());
 
     sendAjax('POST', $("#domoForm").attr("action"), $("domoForm").serialize(), function () {
         loadDomosFromServer();
@@ -16,6 +18,39 @@ var handleDomo = function handleDomo(e) {
 
     return false;
 };
+
+var DomoForm = function DomoForm(props) {
+    return React.createElement(
+        "form",
+        { id: "domoForm",
+            onSubmit: handleDomo,
+            name: "domoForm",
+            action: "/maker",
+            method: "POST",
+            className: "domoForm" },
+        React.createElement(
+            "label",
+            { htmlFor: "name" },
+            "Name: "
+        ),
+        React.createElement("input", { id: "domoName", type: "text", name: "name", placeholder: "Domo Name" }),
+        React.createElement(
+            "label",
+            { htmlFor: "age" },
+            "Age: "
+        ),
+        React.createElement("input", { id: "domoAge", type: "text", name: "age", placeholder: "Domo Age" }),
+        React.createElement(
+            "label",
+            { htmlFor: "age" },
+            "Cuteness: "
+        ),
+        React.createElement("input", { id: "domoCuteness", type: "text", name: "cuteness", placeholder: "Domo Cuteness" }),
+        React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
+        React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
+    );
+};
+
 var DomoList = function DomoList(props) {
     if (props.domos.length === 0) {
         return React.createElement(
@@ -46,6 +81,13 @@ var DomoList = function DomoList(props) {
                 " Age: ",
                 domo.age,
                 " "
+            ),
+            React.createElement(
+                "h3",
+                { className: "domoCuteness" },
+                " Cuteness: ",
+                domo.cuteness,
+                " "
             )
         );
     });
@@ -57,10 +99,37 @@ var DomoList = function DomoList(props) {
     );
 };
 
+var DomoTotal = function DomoTotal(props) {
+    if (props.domos.length === 0) {
+        return React.createElement(
+            "div",
+            { className: "domoTotal" },
+            React.createElement(
+                "h3",
+                null,
+                "Total Domos: 0"
+            )
+        );
+    }
+
+    return React.createElement(
+        "div",
+        { className: "domoTotal" },
+        React.createElement(
+            "h3",
+            null,
+            "Total Domos: ",
+            props.domos.length
+        )
+    );
+};
+
 var setup = function setup(csrf) {
     ReactDOM.render(React.createElement(DomoForm, { csrf: csrf }), document.querySelector("#makeDomo"));
 
     ReactDOM.render(React.createElement(DomoList, { domos: [] }), document.querySelector("#domos"));
+
+    ReactDOM.render(React.createElement(DomoTotal, { domos: [] }), document.querySelector("#totalDomos"));
 
     loadDomosFromServer();
 };
@@ -76,37 +145,6 @@ var getToken = function getToken() {
         setup(result.csrfToken);
     });
 };
-var DomoForm = function DomoForm(props) {
-    return React.createElement(
-        "form",
-        { id: "domoForm",
-            onSubmit: handleDomo,
-            name: "domoForm",
-            action: "/maker",
-            method: "POST",
-            className: "domoForm" },
-        React.createElement(
-            "label",
-            { htmlFor: "name" },
-            "Name: "
-        ),
-        React.createElement("input", { id: "domoName", type: "text", name: "name", placeholder: "Domo Name" }),
-        React.createElement(
-            "label",
-            { htmlFor: "age" },
-            "Age: "
-        ),
-        React.createElement("input", { id: "domoAge", type: "text", name: "age", placeholder: "Domo Age" }),
-        React.createElement(
-            "label",
-            { htmlFor: "cuteness" },
-            "Cuteness: "
-        ),
-        React.createElement("input", { id: "domoCuteness", type: "text", name: "cuteness", placeholder: "Domo Cuteness" }),
-        React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-        React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
-    );
-};
 
 $(document).ready(function () {
     getToken();
@@ -115,7 +153,7 @@ $(document).ready(function () {
 
 var handleError = function handleError(message) {
     $("#errorMessage").text(message);
-    $("#domoMessage").animat({ width: 'toggle' }, 350);
+    $("#domoMessage").animate({ width: 'toggle' }, 350);
 };
 
 var redirect = function redirect(response) {
