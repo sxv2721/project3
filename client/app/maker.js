@@ -1,4 +1,4 @@
-const handleDomo = (e) => {
+/*const handleDomo = (e) => {
     e.preventDefault();
     
     $("#domoMessage").animate({width: 'hide'}, 350);
@@ -11,7 +11,7 @@ const handleDomo = (e) => {
     
     //console.log($("input[name=_csrf]").val());
     
-    sendAjax('POST', $("#domoForm").attr("action"), $("domoForm").serialize(), function() {
+    sendAjax('POST', $("#domoForm").attr("action"), $("#domoForm").serialize(), function() {
         loadDomosFromServer();
     });
     
@@ -81,7 +81,18 @@ const DomoTotal = function(props){
         );
 };
 
+
+const loadDomosFromServer = () => {
+    sendAjax('GET', '/getDomos', null, (data) => {
+        ReactDOM.render(
+            <DomoList domos={data.domos} />, document.querySelector("#domos")
+        );
+    });
+};/**/
+
+const 
 const setup = function(csrf) {
+    /*
     ReactDOM.render(
         <DomoForm csrf={csrf} />, document.querySelector("#makeDomo")
     );
@@ -94,17 +105,10 @@ const setup = function(csrf) {
         <DomoTotal domos={[]} />, document.querySelector("#totalDomos")
     );
     
-    loadDomosFromServer();
+    loadDomosFromServer();/**/
+    
+    
 };
-
-const loadDomosFromServer = () => {
-    sendAjax('GET', '/getDomos', null, (data) => {
-        ReactDOM.render(
-            <DomoList domos={data.domos} />, document.querySelector("#domos")
-        );
-    });
-};
-
 const getToken = () => {
     sendAjax('GET', '/getToken', null, (result) => {
         setup(result.csrfToken);
