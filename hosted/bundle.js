@@ -5,88 +5,88 @@ var handleDomo = function handleDomo(e) {
 
     $("#domoMessage").animate({ width: 'hide' }, 350);
 
-    if ($("#domoName").val() == '' || $("#domoAge").val() == '' || $("#domoCuteness") == '') {
+    if ($("#noteName").val() == '' || $("#note").val() == '') {
         handleError("RAWR~ All fields are required");
         return false;
     }
 
     //console.log($("input[name=_csrf]").val());
 
-    sendAjax('POST', $("#domoForm").attr("action"), $("#domoForm").serialize(), function () {
-        loadDomosFromServer();
+    sendAjax('POST', $("#noteForm").attr("action"), $("#noteForm").serialize(), function () {
+        loadNotesFromServer();
     });
 
     return false;
 };
 
-var DomoForm = function DomoForm(props) {
+var NoteForm = function NoteForm(props) {
     return React.createElement(
         "form",
-        { id: "domoForm",
+        { id: "noteForm",
             onSubmit: handleDomo,
-            name: "domoForm",
+            name: "noteForm",
             action: "/maker",
             method: "POST",
-            className: "domoForm" },
+            className: "noteForm" },
         React.createElement(
             "label",
             { htmlFor: "name" },
             "Name: "
         ),
-        React.createElement("input", { id: "domoName", type: "text", name: "name", placeholder: "Domo Name" }),
+        React.createElement("input", { id: "name", type: "text", name: "name", placeholder: "Note Title" }),
         React.createElement(
             "label",
             { htmlFor: "age" },
             "Age: "
         ),
-        React.createElement("input", { id: "domoAge", type: "text", name: "age", placeholder: "Domo Age" }),
+        React.createElement("input", { id: "note", type: "text", name: "note", placeholder: "Note" }),
         React.createElement(
             "label",
-            { htmlFor: "age" },
-            "Cuteness: "
+            { htmlFor: "reveal" },
+            "Reveal Date: "
         ),
-        React.createElement("input", { id: "domoCuteness", type: "text", name: "cuteness", placeholder: "Domo Cuteness" }),
+        React.createElement("input", { id: "reveal", type: "date", name: "reveal" }),
         React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
-        React.createElement("input", { className: "makeDomoSubmit", type: "submit", value: "Make Domo" })
+        React.createElement("input", { className: "makeNoteSubmit", type: "submit", value: "Make Note" })
     );
 };
 
-var DomoList = function DomoList(props) {
-    if (props.domos.length === 0) {
+var NoteList = function NoteList(props) {
+    if (props.notes.length === 0) {
         return React.createElement(
             "div",
-            { className: "domoList" },
+            { className: "noteList" },
             React.createElement(
                 "h3",
-                { className: "emptyDomo" },
-                "No Domos yet"
+                { className: "emptynote" },
+                "No Notes yet"
             )
         );
     }
-    var domoNodes = props.domos.map(function (domo) {
+    var noteNodes = props.notes.map(function (domo) {
         return React.createElement(
             "div",
-            { key: domo._id, className: "domo" },
+            { key: note._id, className: "note" },
             React.createElement("img", { src: "/assets/img/domoface.jpeg", alt: "domo face", className: "domoFace" }),
             React.createElement(
                 "h3",
-                { className: "domoName" },
+                { className: "noteName" },
                 " Name: ",
-                domo.name,
+                notes.name,
                 " "
             ),
             React.createElement(
                 "h3",
-                { className: "domoAge" },
-                " Age: ",
-                domo.age,
+                { className: "note" },
+                " Note: ",
+                notes.note,
                 " "
             ),
             React.createElement(
                 "h3",
-                { className: "domoCuteness" },
-                " Cuteness: ",
-                domo.cuteness,
+                { className: "noteReveal" },
+                " Reveal: ",
+                notes.reveal,
                 " "
             )
         );
@@ -94,52 +94,25 @@ var DomoList = function DomoList(props) {
 
     return React.createElement(
         "div",
-        { className: "domoList" },
-        domoNodes
+        { className: "noteList" },
+        noteNodes
     );
 };
 
-var DomoTotal = function DomoTotal(props) {
-    if (props.domos.length === 0) {
-        return React.createElement(
-            "div",
-            { className: "domoTotal" },
-            React.createElement(
-                "h3",
-                null,
-                "Total Domos: 0"
-            )
-        );
-    }
-
-    return React.createElement(
-        "div",
-        { className: "domoTotal" },
-        React.createElement(
-            "h3",
-            null,
-            "Total Domos: ",
-            props.domos.length
-        )
-    );
-};
+var loadNotesFromServer = function loadNotesFromServer() {
+    sendAjax('GET', '/getNotes', null, function (data) {
+        ReactDOM.render(React.createElement(NoteList, { notes: data.notes }), document.querySelector("#notes"));
+    });
+}; /**/
 
 var setup = function setup(csrf) {
-    ReactDOM.render(React.createElement(DomoForm, { csrf: csrf }), document.querySelector("#makeDomo"));
 
-    ReactDOM.render(React.createElement(DomoList, { domos: [] }), document.querySelector("#domos"));
+    ReactDOM.render(React.createElement(NoteForm, { csrf: csrf }), document.querySelector("#makeNote"));
 
-    ReactDOM.render(React.createElement(DomoTotal, { domos: [] }), document.querySelector("#totalDomos"));
+    ReactDOM.render(React.createElement(NoteList, { notes: [] }), document.querySelector("#notes"));
 
-    loadDomosFromServer();
+    loadNotesFromServer; /**/
 };
-
-var loadDomosFromServer = function loadDomosFromServer() {
-    sendAjax('GET', '/getDomos', null, function (data) {
-        ReactDOM.render(React.createElement(DomoList, { domos: data.domos }), document.querySelector("#domos"));
-    });
-};
-
 var getToken = function getToken() {
     sendAjax('GET', '/getToken', null, function (result) {
         setup(result.csrfToken);

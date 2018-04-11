@@ -18,11 +18,15 @@ const NoteSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-    }
+    },
     owner: {
         type: mongoose.Schema.ObjectId,
         required: true,
         ref: 'Account',
+    },
+    revealDate: {
+        type:Date,
+        default: Date.now,
     },
     createdData: {
         type: Date,
@@ -33,6 +37,7 @@ const NoteSchema = new mongoose.Schema({
 NoteSchema.statics.toAPI = (doc) => ({
     name: doc.name,
     note: doc.note,
+    reveal: doc.revealDate,
 });
 
 NoteSchema.statics.findByOwner = (ownerId, callback) => {
@@ -40,10 +45,10 @@ NoteSchema.statics.findByOwner = (ownerId, callback) => {
         owner: convertId(ownerId),
     };
     
-    return DomoModel.find(search).select('name').exec(callback);
+    return NoteModel.find(search).select('name').exec(callback);
 };
 
-NoteModel = mongoose.model('Note', noteSchema);
+NoteModel = mongoose.model('Note', NoteSchema);
 
-module.exports.DomoModel = DomoModel;
-module.exports.DomoSchema = DomoSchema;
+module.exports.NoteModel = NoteModel;
+module.exports.NoteSchema = NoteSchema;

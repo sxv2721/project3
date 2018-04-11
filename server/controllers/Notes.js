@@ -3,13 +3,13 @@ const models = require('../models');
 const Notes = models.Notes;
 
 const makerPage = (req, res) => {
-    Domo.DomoModel.findByOwner(req.session.account._id, (err, docs) => {
+    Notes.NoteModel.findByOwner(req.session.account._id, (err, docs) => {
         if(err){
             console.log(err);
             return res.status(400).json({ error: 'An error occurred'});
         }
         console.log(req.csrfToken());
-        return res.render('app', { csrfToken: req.csrfToken(), domos: docs});
+        return res.render('app', { csrfToken: req.csrfToken(), notes: docs});
     });
 };
 
@@ -22,10 +22,11 @@ const makeNote = (req, res) => {
     const noteData = {
         name: req.body.name,
         note: req.body.note,
+        reveal: req.body.reveal,
         owner: req.session.account._id,
     };
     
-    const newNote = new Note.NoteModel(noteData);
+    const newNote = new Notes.NoteModel(noteData);
     
     const notePromise = newNote.save();
     
@@ -34,7 +35,7 @@ const makeNote = (req, res) => {
     notePromise.catch((err) => {
         console.log(err);
         if(err.code === 11000){
-            return res.status(400).json({ error: 'Domo already exists.'});
+            return res.status(400).json({ error: 'Note already exists.'});
         }
         
         return res.status(400).json({ error: 'An error occurred'});
@@ -47,13 +48,13 @@ const getNotes = (request, response) => {
     const req = request;
     const res = response;
     
-    return Note.NoteModel.findByOwner(req.session.account._id, (err, docs) => {
+    return Notes.NoteModel.findByOwner(req.session.account._id, (err, docs) => {
         if(err) {
             console.log(err);
             return res.status(400).json({ error: 'An error occurred'});
         }
         
-        return res.json({ domos: docs});
+        return res.json({ Notes: docs});
     });
 };
 
