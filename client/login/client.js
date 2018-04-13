@@ -4,7 +4,7 @@ const handleLogin = (e) => {
     $("#domoMessage").animate({width: 'hide'}, 350);
     
     if($("#user").val() == '' || $("#pass").val() == '') {
-        handleError("RAWR~ Username or password is empty");
+        handleError("Username or password is empty");
         return false;
     }
     
@@ -20,11 +20,29 @@ const handleSignup = (e) => {
     $("#domoMessage").animate({width: 'hide'}, 350);
     
     if($("#user").val() == '' || $("#pass").val() == '' || $("#pass2").val() == '') {
-        handleError("RAWR~ Username or password is empty");
+        handleError("Username or password is empty");
         return false;
     }
     
     sendAjax('POST', $("#signupForm").attr("action"), $("#signupForm").serialize(), redirect);
+    return false;
+}
+
+const handlePass = (e) => {
+    e.preventDefault)();
+    $("#domoMessage").animate({width: 'hide'}, 350);
+    
+    if($("#pass").val() == '') {
+        handleError("password 1 is empty");
+        return false;
+    }
+    if($("#pass2").val() == '') {
+        handleError("please retype password");
+        return false;
+    }
+    
+    
+    sendAjax('POST', $("#changeForm").attr("action"), $("#changeForm").serialize(), redirect);
     return false;
 }
 const LoginWindow = (props) => {
@@ -37,7 +55,7 @@ const LoginWindow = (props) => {
         >
             <label htmlFor="username">Username: </label>
             <input id="user" type="text" name="username" placeholder="username"/>
-            <label htmlFor="pass">Password: </label>
+            <label htmlFor="pass">  Password: </label>
             <input id="pass" type="password" name="pass" placeholder="password"/>
             <input type="hidden" name="_csrf" value={props.csrf}/>
             <input className="formSubmit" type="submit" value="Sign in" />
@@ -45,6 +63,7 @@ const LoginWindow = (props) => {
         </form>
     );
 };
+
 
 const SignupWindow = (props) => {
     return (
@@ -56,17 +75,39 @@ const SignupWindow = (props) => {
         >
             <label htmlFor="username">Username: </label>
             <input id="user" type="text" name="username" placeholder="username"/>
+        <br/>
             <label htmlFor="pass">Password: </label>
             <input id="pass" type="password" name="pass" placeholder="password"/>
-            <label htmlFor="pass2">Password: </label>
+        <br/>    
+        <label htmlFor="pass2">Password: </label>
             <input id="pass2" type="password" name="pass2" placeholder="retype password"/>
-            <input type="hidden" name="_csrf" value={props.csrf}/>
+        <br/>    
+        <input type="hidden" name="_csrf" value={props.csrf}/>
             <input className="formSubmit" type="submit" value="Sign up" />
         
         </form>
     );
 };
-
+const ChangePassWindow = (props) => {
+    return (
+    <form id="changeForm" name="changeForm"
+            onSubmit={handle}
+            action="/"
+            method="POST"
+            className="mainForm"
+        >
+            <label htmlFor="pass">Password: </label>
+            <input id="pass" type="password" name="pass" placeholder="password"/>
+            <br/>    
+            <label htmlFor="pass2">Password: </label>
+            <input id="pass2" type="password" name="pass2" placeholder="retype password"/>
+            <br/>    
+            <input type="hidden" name="_csrf" value={props.csrf}/>
+            <input className="formSubmit" type="submit" value="Change Password" />
+        
+        </form>
+    )
+}
 const createLoginWindow = (csrf) => {
     ReactDOM.render(
         <LoginWindow csrf = {csrf} />,
@@ -80,7 +121,12 @@ const createSignupWindow = (csrf) => {
         document.querySelector("#content"),
     );
 };
-
+const createChangePassWindow = (csrf)=> {
+    ReactDom.render(
+        <ChangePassWindow csrf = {csrf} />,
+        document.querySelector("#content"),
+    )
+}
 const setup = (csrf) => {
     const loginButton = document.querySelector("#loginButton");
     const signupButton = document.querySelector("#signupButton");

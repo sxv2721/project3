@@ -55,11 +55,17 @@ const NoteList = function(props){
         console.dir(notes.reveal);
         //<h2 className="noteReveal"> Reveal: <h3>{notes.reveal}</h3> </h2>
         return (
-            <div key={note._id} className="notes">
+            <div key={note._id} className="noteList">
                 <h2 className="noteName">{notes.name}</h2>
                 
                 <h2 className="note">{notes.note}</h2>
-                
+                <form
+                    onSubmit = {removeNote}
+                    action="/removeNote"
+                    method="post">
+                    <input type="hidden" name="_id" value={note._id} />
+                    <input type="submit" value="Delete Note"/>                
+                </form>
             </div>
         );
     });
@@ -71,6 +77,14 @@ const NoteList = function(props){
     );
 };
 
+const removeNote = (e) => {
+    e.preventDefault();
+    
+    sendAjax('POST', $("#noteForm").attr("action"), $("#noteForm").serialize(), function() {
+        loadNotesFromServer();
+    });
+    return false;
+}
 
 
 const loadNotesFromServer = () => {

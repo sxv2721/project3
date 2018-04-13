@@ -82,7 +82,7 @@ input[type=submit]:hover {
     transition: background-color 0.8s ease;
     background-color: #8F8B64;
 }
-.notes {
+.noteList, #loginForm, #signupForm, #welcome {
     border-radius: 5px;
     padding: 10px;
     padding-top:0px;
@@ -91,6 +91,10 @@ input[type=submit]:hover {
     background-color: #BAB68D;
     font-size: 14pt;
     font-weight: 100;
+}
+#welcome{
+    margin-top: 10px;
+    
 }
 .note {
     margin-left: 20px;

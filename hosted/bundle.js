@@ -73,7 +73,7 @@ var NoteList = function NoteList(props) {
         //<h2 className="noteReveal"> Reveal: <h3>{notes.reveal}</h3> </h2>
         return React.createElement(
             "div",
-            { key: note._id, className: "notes" },
+            { key: note._id, className: "noteList" },
             React.createElement(
                 "h2",
                 { className: "noteName" },
@@ -83,6 +83,15 @@ var NoteList = function NoteList(props) {
                 "h2",
                 { className: "note" },
                 notes.note
+            ),
+            React.createElement(
+                "form",
+                {
+                    onSubmit: removeNote,
+                    action: "/removeNote",
+                    method: "post" },
+                React.createElement("input", { type: "hidden", name: "_id", value: note._id }),
+                React.createElement("input", { type: "submit", value: "Delete Note" })
             )
         );
     });
@@ -92,6 +101,15 @@ var NoteList = function NoteList(props) {
         { className: "noteList" },
         noteNodes
     );
+};
+
+var removeNote = function removeNote(e) {
+    e.preventDefault();
+
+    sendAjax('POST', $("#noteForm").attr("action"), $("#noteForm").serialize(), function () {
+        loadNotesFromServer();
+    });
+    return false;
 };
 
 var loadNotesFromServer = function loadNotesFromServer() {

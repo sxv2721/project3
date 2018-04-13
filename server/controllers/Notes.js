@@ -58,7 +58,7 @@ const getNotes = (request, response) => {
     });
 };
 
-const removeNote = (request, response) {
+const removeNote = (request, response) => {
     const req = request;
     const res = response;
     
