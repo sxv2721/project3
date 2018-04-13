@@ -8,45 +8,45 @@ const convertId = mongoose.Types.ObjectId;
 const setName = (name) => _.escape(name).trim();
 
 const DomoSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        trim: true,
-        set: setName,
-    },
-    age: {
-        type: Number,
-        min: 0,
-        required: true,
-    },
-    cuteness: {
-        type: Number,
-        min: 0,
-        required: true,
-    },
-    owner: {
-        type: mongoose.Schema.ObjectId,
-        required: true,
-        ref: 'Account',
-    },
-    createdData: {
-        type: Date,
-        default: Date.now,
-    },
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+    set: setName,
+  },
+  age: {
+    type: Number,
+    min: 0,
+    required: true,
+  },
+  cuteness: {
+    type: Number,
+    min: 0,
+    required: true,
+  },
+  owner: {
+    type: mongoose.Schema.ObjectId,
+    required: true,
+    ref: 'Account',
+  },
+  createdData: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 DomoSchema.statics.toAPI = (doc) => ({
-    name: doc.name,
-    age: doc.age,
-    cuteness: doc.cuteness,
+  name: doc.name,
+  age: doc.age,
+  cuteness: doc.cuteness,
 });
 
 DomoSchema.statics.findByOwner = (ownerId, callback) => {
-    const search = {
-        owner: convertId(ownerId),
-    };
-    
-    return DomoModel.find(search).select('name age cuteness').exec(callback);
+  const search = {
+    owner: convertId(ownerId),
+  };
+
+  return DomoModel.find(search).select('name age cuteness').exec(callback);
 };
 
 DomoModel = mongoose.model('Domo', DomoSchema);
