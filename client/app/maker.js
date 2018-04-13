@@ -53,7 +53,11 @@ const NoteList = function(props){
     }
     const noteNodes = props.notes.map(function(notes) {
         console.dir(notes.reveal);
-        //<h2 className="noteReveal"> Reveal: <h3>{notes.reveal}</h3> </h2>
+        /*<h2 className="noteReveal"> Reveal: <h3>{notes.reveal}</h3> </h2>
+        <input type="hidden" name="_id" value={note._id} />
+                    <input type="submit" value="Delete Note"/>                
+                
+        /**/
         return (
             <div key={note._id} className="noteList">
                 <h2 className="noteName">{notes.name}</h2>
@@ -63,9 +67,7 @@ const NoteList = function(props){
                     onSubmit = {removeNote}
                     action="/removeNote"
                     method="post">
-                    <input type="hidden" name="_id" value={note._id} />
-                    <input type="submit" value="Delete Note"/>                
-                </form>
+                    </form>
             </div>
         );
     });

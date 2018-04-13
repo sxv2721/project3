@@ -29,7 +29,6 @@ var handleSignup = function handleSignup(e) {
     sendAjax('POST', $("#signupForm").attr("action"), $("#signupForm").serialize(), redirect);
     return false;
 };
-
 var handlePass = function handlePass(e) {
     e.preventDefault();
     $("#domoMessage").animate({ width: 'hide' }, 350);

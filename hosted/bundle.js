@@ -70,7 +70,11 @@ var NoteList = function NoteList(props) {
     }
     var noteNodes = props.notes.map(function (notes) {
         console.dir(notes.reveal);
-        //<h2 className="noteReveal"> Reveal: <h3>{notes.reveal}</h3> </h2>
+        /*<h2 className="noteReveal"> Reveal: <h3>{notes.reveal}</h3> </h2>
+        <input type="hidden" name="_id" value={note._id} />
+                    <input type="submit" value="Delete Note"/>                
+                
+        /**/
         return React.createElement(
             "div",
             { key: note._id, className: "noteList" },
@@ -84,15 +88,10 @@ var NoteList = function NoteList(props) {
                 { className: "note" },
                 notes.note
             ),
-            React.createElement(
-                "form",
-                {
-                    onSubmit: removeNote,
-                    action: "/removeNote",
-                    method: "post" },
-                React.createElement("input", { type: "hidden", name: "_id", value: note._id }),
-                React.createElement("input", { type: "submit", value: "Delete Note" })
-            )
+            React.createElement("form", {
+                onSubmit: removeNote,
+                action: "/removeNote",
+                method: "post" })
         );
     });
 
