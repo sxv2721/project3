@@ -39,6 +39,9 @@ nav:nth-child(1) {
     background-color: #8F8B64;
 }
 
+#domoMessage {
+    display:none;
+}
 #errorMessage {
     margin-left: 20px;
     font-size: 14pt;
@@ -48,8 +51,7 @@ nav:nth-child(1) {
 }
 #makeNote {
     margin-bottom: 20px;
-}
-section {
+
     border-radius: 5px;
     padding: 5px;
     margin-left: 20px;
@@ -80,7 +82,19 @@ input[type=submit]:hover {
     transition: background-color 0.8s ease;
     background-color: #8F8B64;
 }
-#note {
+.notes {
+    border-radius: 5px;
+    padding: 10px;
+    padding-top:0px;
+    margin-left: 20px;
+    margin-bottom: 10px;
+    background-color: #BAB68D;
     font-size: 14pt;
     font-weight: 100;
+}
+.note {
+    margin-left: 20px;
+    font-size: 14pt;
+    font-weight: 100;
+    margin-top:-20px;
 }

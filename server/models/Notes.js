@@ -46,7 +46,7 @@ NoteSchema.statics.findByOwner = (ownerId, callback) => {
         owner: convertId(ownerId),
     };
     
-    return NoteModel.find(search).select('name').exec(callback);
+    return NoteModel.find(search).select('name note revealDate').exec(callback);
 };
 
 NoteModel = mongoose.model('Note', NoteSchema);

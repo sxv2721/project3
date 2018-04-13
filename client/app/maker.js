@@ -21,6 +21,10 @@ const handleDomo = (e) => {
 
 const NoteForm = (props) => {
     const today = new Date();
+    /*
+    <label htmlFor="reveal"> Reveal Date: </label>
+            <input id="reveal" type="date" name="reveal" /> <br/>
+    */
     return (
         <form id="noteForm"
         onSubmit={handleDomo}
@@ -28,12 +32,11 @@ const NoteForm = (props) => {
         action="/maker"
         method="POST"
         className="noteForm">
-            <label htmlFor="name">Name: </label>
+            <label htmlFor="name">Title: </label>
             <input id="noteName" type="text" name="name" placeholder="Note Title"/><br/>
-            <label htmlFor="reveal"> Reveal Date: </label>
-            <input id="reveal" type="date" name="reveal" /> <br/>
+            <br/>
             <label htmlFor="note"> Note: </label> <br/>
-            <textarea id="note" type="text" name="note" placeholder="Note" rows="10" cols="50" /> <br/>
+            <textarea id="note" type="text" name="note" placeholder="Write a note to your future self!" rows="10" cols="50" /> <br/>
             <input type="hidden" name="_csrf" value={props.csrf}/>
             <input className="makeNoteSubmit" type="submit" value="Make Note"/>
         </form>
@@ -41,7 +44,7 @@ const NoteForm = (props) => {
 };
 
 const NoteList = function(props){
-    if(props.notes !== 'undefined' && props.notes.length === 0){
+    if(props.notes.length === 0){
         return (
             <div className="noteList">
                 <h2 className="emptynote">No Notes yet</h2>
@@ -49,11 +52,12 @@ const NoteList = function(props){
         );
     }
     const noteNodes = props.notes.map(function(notes) {
-        console.dir(notes);
+        console.dir(notes.reveal);
+        //<h2 className="noteReveal"> Reveal: <h3>{notes.reveal}</h3> </h2>
         return (
-            <div key={note._id} className="note">
+            <div key={note._id} className="notes">
                 <h2 className="noteName">{notes.name}</h2>
-                <h2 className="noteReveal"> Reveal: <h3>{notes.reveal}</h3> </h2>
+                
                 <h2 className="note">{notes.note}</h2>
                 
             </div>

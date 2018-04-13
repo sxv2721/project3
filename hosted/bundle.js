@@ -21,6 +21,10 @@ var handleDomo = function handleDomo(e) {
 
 var NoteForm = function NoteForm(props) {
     var today = new Date();
+    /*
+    <label htmlFor="reveal"> Reveal Date: </label>
+            <input id="reveal" type="date" name="reveal" /> <br/>
+    */
     return React.createElement(
         "form",
         { id: "noteForm",
@@ -32,17 +36,10 @@ var NoteForm = function NoteForm(props) {
         React.createElement(
             "label",
             { htmlFor: "name" },
-            "Name: "
+            "Title: "
         ),
         React.createElement("input", { id: "noteName", type: "text", name: "name", placeholder: "Note Title" }),
         React.createElement("br", null),
-        React.createElement(
-            "label",
-            { htmlFor: "reveal" },
-            " Reveal Date: "
-        ),
-        React.createElement("input", { id: "reveal", type: "date", name: "reveal" }),
-        " ",
         React.createElement("br", null),
         React.createElement(
             "label",
@@ -51,7 +48,7 @@ var NoteForm = function NoteForm(props) {
         ),
         " ",
         React.createElement("br", null),
-        React.createElement("textarea", { id: "note", type: "text", name: "note", placeholder: "Note", rows: "10", cols: "50" }),
+        React.createElement("textarea", { id: "note", type: "text", name: "note", placeholder: "Write a note to your future self!", rows: "10", cols: "50" }),
         " ",
         React.createElement("br", null),
         React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
@@ -60,7 +57,7 @@ var NoteForm = function NoteForm(props) {
 };
 
 var NoteList = function NoteList(props) {
-    if (props.notes !== 'undefined' && props.notes.length === 0) {
+    if (props.notes.length === 0) {
         return React.createElement(
             "div",
             { className: "noteList" },
@@ -72,25 +69,15 @@ var NoteList = function NoteList(props) {
         );
     }
     var noteNodes = props.notes.map(function (notes) {
-        console.dir(notes);
+        console.dir(notes.reveal);
+        //<h2 className="noteReveal"> Reveal: <h3>{notes.reveal}</h3> </h2>
         return React.createElement(
             "div",
-            { key: note._id, className: "note" },
+            { key: note._id, className: "notes" },
             React.createElement(
                 "h2",
                 { className: "noteName" },
                 notes.name
-            ),
-            React.createElement(
-                "h2",
-                { className: "noteReveal" },
-                " Reveal: ",
-                React.createElement(
-                    "h3",
-                    null,
-                    notes.reveal
-                ),
-                " "
             ),
             React.createElement(
                 "h2",
