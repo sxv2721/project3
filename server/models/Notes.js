@@ -18,6 +18,7 @@ const NoteSchema = new mongoose.Schema({
         type: String,
         required: true,
         trim: true,
+        set: setName,
     },
     owner: {
         type: mongoose.Schema.ObjectId,

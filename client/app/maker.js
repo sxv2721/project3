@@ -20,6 +20,7 @@ const handleDomo = (e) => {
 
 
 const NoteForm = (props) => {
+    const today = new Date();
     return (
         <form id="noteForm"
         onSubmit={handleDomo}
@@ -28,11 +29,11 @@ const NoteForm = (props) => {
         method="POST"
         className="noteForm">
             <label htmlFor="name">Name: </label>
-            <input id="name" type="text" name="name" placeholder="Note Title"/>
-            <label htmlFor="age">Age: </label>
-            <input id="note" type="text" name="note" placeholder="Note"/>
-            <label htmlFor="reveal">Reveal Date: </label>
-            <input id="reveal" type="date" name="reveal"/>
+            <input id="noteName" type="text" name="name" placeholder="Note Title"/><br/>
+            <label htmlFor="reveal"> Reveal Date: </label>
+            <input id="reveal" type="date" name="reveal" /> <br/>
+            <label htmlFor="note"> Note: </label> <br/>
+            <textarea id="note" type="text" name="note" placeholder="Note" rows="10" cols="50" /> <br/>
             <input type="hidden" name="_csrf" value={props.csrf}/>
             <input className="makeNoteSubmit" type="submit" value="Make Note"/>
         </form>
@@ -40,20 +41,21 @@ const NoteForm = (props) => {
 };
 
 const NoteList = function(props){
-    if(props.notes.length === 0){
+    if(props.notes !== 'undefined' && props.notes.length === 0){
         return (
             <div className="noteList">
-                <h3 className="emptynote">No Notes yet</h3>
+                <h2 className="emptynote">No Notes yet</h2>
             </div>
         );
     }
-    const noteNodes = props.notes.map(function(domo) {
+    const noteNodes = props.notes.map(function(notes) {
+        console.dir(notes);
         return (
             <div key={note._id} className="note">
-                <img src="/assets/img/domoface.jpeg" alt="domo face" className="domoFace" />
-                <h3 className="noteName"> Name: {notes.name} </h3>
-                <h3 className="note"> Note: {notes.note} </h3>
-                <h3 className="noteReveal"> Reveal: {notes.reveal} </h3>
+                <h2 className="noteName">{notes.name}</h2>
+                <h2 className="noteReveal"> Reveal: <h3>{notes.reveal}</h3> </h2>
+                <h2 className="note">{notes.note}</h2>
+                
             </div>
         );
     });
@@ -86,7 +88,7 @@ const setup = function(csrf) {
     );
     
     
-    loadNotesFromServer/**/
+    loadNotesFromServer();/**/
     
     
 };

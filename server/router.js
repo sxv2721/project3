@@ -1,7 +1,6 @@
 const controllers = require('./controllers');
 const mid = require('./middleware');
 
-console.dir(controllers);
 const router = (app) => {
     app.get('/getToken', mid.requiresSecure, controllers.Account.getToken);
     app.get('/getNotes', mid.requiresLogin, controllers.Notes.getNotes);

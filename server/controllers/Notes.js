@@ -8,7 +8,7 @@ const makerPage = (req, res) => {
             console.log(err);
             return res.status(400).json({ error: 'An error occurred'});
         }
-        console.log(req.csrfToken());
+        //console.log(req.csrfToken());
         return res.render('app', { csrfToken: req.csrfToken(), notes: docs});
     });
 };
@@ -18,7 +18,7 @@ const makeNote = (req, res) => {
     if(!req.body.name || !req.body.note){
         return res.status(400).json({ error: 'RAWR! name, and note are required' });
     }
-    
+    console.dir(req.body);
     const noteData = {
         name: req.body.name,
         note: req.body.note,
@@ -54,7 +54,7 @@ const getNotes = (request, response) => {
             return res.status(400).json({ error: 'An error occurred'});
         }
         
-        return res.json({ Notes: docs});
+        return res.json({ notes: docs});
     });
 };
 

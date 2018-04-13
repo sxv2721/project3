@@ -20,6 +20,7 @@ var handleDomo = function handleDomo(e) {
 };
 
 var NoteForm = function NoteForm(props) {
+    var today = new Date();
     return React.createElement(
         "form",
         { id: "noteForm",
@@ -33,61 +34,68 @@ var NoteForm = function NoteForm(props) {
             { htmlFor: "name" },
             "Name: "
         ),
-        React.createElement("input", { id: "name", type: "text", name: "name", placeholder: "Note Title" }),
-        React.createElement(
-            "label",
-            { htmlFor: "age" },
-            "Age: "
-        ),
-        React.createElement("input", { id: "note", type: "text", name: "note", placeholder: "Note" }),
+        React.createElement("input", { id: "noteName", type: "text", name: "name", placeholder: "Note Title" }),
+        React.createElement("br", null),
         React.createElement(
             "label",
             { htmlFor: "reveal" },
-            "Reveal Date: "
+            " Reveal Date: "
         ),
         React.createElement("input", { id: "reveal", type: "date", name: "reveal" }),
+        " ",
+        React.createElement("br", null),
+        React.createElement(
+            "label",
+            { htmlFor: "note" },
+            " Note: "
+        ),
+        " ",
+        React.createElement("br", null),
+        React.createElement("textarea", { id: "note", type: "text", name: "note", placeholder: "Note", rows: "10", cols: "50" }),
+        " ",
+        React.createElement("br", null),
         React.createElement("input", { type: "hidden", name: "_csrf", value: props.csrf }),
         React.createElement("input", { className: "makeNoteSubmit", type: "submit", value: "Make Note" })
     );
 };
 
 var NoteList = function NoteList(props) {
-    if (props.notes.length === 0) {
+    if (props.notes !== 'undefined' && props.notes.length === 0) {
         return React.createElement(
             "div",
             { className: "noteList" },
             React.createElement(
-                "h3",
+                "h2",
                 { className: "emptynote" },
                 "No Notes yet"
             )
         );
     }
-    var noteNodes = props.notes.map(function (domo) {
+    var noteNodes = props.notes.map(function (notes) {
+        console.dir(notes);
         return React.createElement(
             "div",
             { key: note._id, className: "note" },
-            React.createElement("img", { src: "/assets/img/domoface.jpeg", alt: "domo face", className: "domoFace" }),
             React.createElement(
-                "h3",
+                "h2",
                 { className: "noteName" },
-                " Name: ",
-                notes.name,
-                " "
+                notes.name
             ),
             React.createElement(
-                "h3",
-                { className: "note" },
-                " Note: ",
-                notes.note,
-                " "
-            ),
-            React.createElement(
-                "h3",
+                "h2",
                 { className: "noteReveal" },
                 " Reveal: ",
-                notes.reveal,
+                React.createElement(
+                    "h3",
+                    null,
+                    notes.reveal
+                ),
                 " "
+            ),
+            React.createElement(
+                "h2",
+                { className: "note" },
+                notes.note
             )
         );
     });
@@ -111,7 +119,7 @@ var setup = function setup(csrf) {
 
     ReactDOM.render(React.createElement(NoteList, { notes: [] }), document.querySelector("#notes"));
 
-    loadNotesFromServer; /**/
+    loadNotesFromServer(); /**/
 };
 var getToken = function getToken() {
     sendAjax('GET', '/getToken', null, function (result) {
