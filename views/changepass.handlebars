@@ -10,23 +10,21 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.min.js"></script>
   <link rel="shortcut icon" href="/assets/img/favicon.png"/>
   <link rel="stylesheet" type="text/css" href="/assets/style.css"/>
-   <link href="https://fonts.googleapis.com/css?family=Dosis|Karla|Varela+Round" rel="stylesheet"> 
 </head>
-<body>
-  <nav><a href="/login" class = "navlink">N</a>
-    <div class="navlink"><a href="/logout">Log out</a></div>
-    <div class="navlink"><a id="changeButton" href="/change">Change Password</a></div>
-    <div class="navlink"><a id="aboutButton" href="/about">About</a></div>
+<body> 
+    <nav><a href="/login" class = "navlink" id="logo">N</a>
+    <div class="navlink"><a id="loginButton" href="/login">Login</a></div>
+    <div class="navlink"><a id="signupButton" href="/signup">Sign up</a></div>
+    
   </nav>
-  <section id="makeNote">
-  </section>
-  <div id="Message">
-    <h3><span id="errorMessage"></span></h3>
+  <section id="content"></section>
+  <div id="domoMessage">
+    <span id="errorMessage"><h3>Wrong username or password</h3></span>
   </div>
-    <a href="https://www.ads.com">Ads</a>
-  <section id="notes">
-  </section>
-  
-  <script src="/assets/bundle.js"></script>
+    <div id="Welcome">
+    <h2>Welcome to Simon Voorhees's Project 2 for Rich Media 2!</h2>
+    <h3>Please login or sign up!</h3>
+    </div>
+  <script src="/assets/loginBundle.js"></script>
 </body>
 </html>

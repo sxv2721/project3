@@ -41,7 +41,7 @@ const NoteForm = (props) => {
             <input className="makeNoteSubmit" type="submit" value="Make Note"/>
         </form>
     );
-};
+}; 
 
 const NoteList = function(props){
     if(props.notes.length === 0){

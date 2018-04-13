@@ -57,7 +57,7 @@ const getNotes = (request, response) => {
         return res.json({ notes: docs});
     });
 };
-
+/*
 const removeNote = (request, response) => {
     const req = request;
     const res = response;
@@ -71,10 +71,10 @@ const removeNote = (request, response) => {
             message: "Note successfully deleted",
             id: docs._id,
         }
-        return res.status(200).send(response);
+        return res.json(response);
     });
-};
+};/**/
 module.exports.makerPage = makerPage;
 module.exports.getNotes = getNotes;
 module.exports.make = makeNote;
-module.exports.remove = removeNote;
+//module.exports.remove = removeNote;

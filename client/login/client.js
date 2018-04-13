@@ -13,7 +13,7 @@ const handleLogin = (e) => {
     sendAjax('POST', $("#loginForm").attr("action"), $("#loginForm").serialize(), redirect);
     return false;
 };
-
+     
 const handleSignup = (e) => {
     e.preventDefault();
     
@@ -27,9 +27,8 @@ const handleSignup = (e) => {
     sendAjax('POST', $("#signupForm").attr("action"), $("#signupForm").serialize(), redirect);
     return false;
 }
-
 const handlePass = (e) => {
-    e.preventDefault)();
+    e.preventDefault();
     $("#domoMessage").animate({width: 'hide'}, 350);
     
     if($("#pass").val() == '') {
@@ -44,7 +43,7 @@ const handlePass = (e) => {
     
     sendAjax('POST', $("#changeForm").attr("action"), $("#changeForm").serialize(), redirect);
     return false;
-}
+}/**/
 const LoginWindow = (props) => {
     return (
         <form id="loginForm" name="loginForm"
@@ -88,6 +87,7 @@ const SignupWindow = (props) => {
         </form>
     );
 };
+
 const ChangePassWindow = (props) => {
     return (
     <form id="changeForm" name="changeForm"
@@ -107,7 +107,7 @@ const ChangePassWindow = (props) => {
         
         </form>
     )
-}
+};/**/
 const createLoginWindow = (csrf) => {
     ReactDOM.render(
         <LoginWindow csrf = {csrf} />,
@@ -121,12 +121,13 @@ const createSignupWindow = (csrf) => {
         document.querySelector("#content"),
     );
 };
+
 const createChangePassWindow = (csrf)=> {
     ReactDom.render(
         <ChangePassWindow csrf = {csrf} />,
         document.querySelector("#content"),
     )
-}
+};/**/
 const setup = (csrf) => {
     const loginButton = document.querySelector("#loginButton");
     const signupButton = document.querySelector("#signupButton");

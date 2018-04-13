@@ -7,12 +7,13 @@ const loginPage = (req, res) => {
     res.render('login', { csrfToken: req.csrfToken() });
 };
 
-const signupPage = (req, res) => {
+/*const signupPage = (req, res) => {
     res.render('signup', { csrfToken: req.csrfToken() });
 };
+
 const changePage = (req, res) => {
     res.render('changePW', {csrfToken: req.csrfToken() });
-}
+};/**/
 
 const logout = (req, res) => {
     req.session.destroy();
@@ -89,6 +90,7 @@ const changePW = (request, response) => {
     const req = request;
     const res = response;
     
+    req.body._id =`${req.session.account._id}`;
     req.body.pass = `${req.body.pass}`;
     req.body.pass2 = `${req.body.pass2}`;
     
@@ -99,7 +101,28 @@ const changePW = (request, response) => {
     if(req.body.pass !== req.body.pass2) {
         return res.status(400).json({ error: 'Passwords do not match' });
     }
-}
+    
+    return Account.AccountModel.generateHash(req.body.pass, (salt, hash) => {
+        return Account.AccountModel.findById(req.body._id, (err, account)=> {
+           if(err){
+               console.log(err);
+               
+               return res.status(400).json({error: 'an error occurred'});
+           } 
+            account.password = hash;
+            account.salt = salt;
+            
+            account.save((err) => {
+                if(err){
+                    console.log(err);
+               
+                    return res.status(400).json({error: 'an  error occurred'});
+                } 
+                return res.json({redirect: '/maker'}); 
+            });
+        });
+    });
+};/**/
 const getToken = (request, response) => {
     const req = request;
     const res = response;
@@ -112,8 +135,9 @@ const getToken = (request, response) => {
 };
 
 module.exports.loginPage = loginPage;
-module.exports.signupPage = signupPage;
+//module.exports.signupPage = signupPage;
 module.exports.login = login;
 module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
+module.exports.changePW = changePW;
