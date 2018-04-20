@@ -62,7 +62,9 @@ const NoteList = function(props){
             <div key={note._id} className="noteList">
                 <h2 className="noteName">{notes.name}</h2>
                 
-                <h2 className="note">{notes.note}</h2>
+                <h2 className="note" id = {note._id}>{notes.note}</h2>
+                <input type="submit" value = "Show Note"
+                className="reveal"onSubmit = {showNote}/>
                 <form
                     onSubmit = {removeNote}
                     action="/removeNote"
@@ -73,12 +75,18 @@ const NoteList = function(props){
     });
     
     return (
-        <div className = "noteList">
+        <div>
             {noteNodes}
         </div>
     );
 };
 
+const showNote = (e) => {
+    e.preventDefault();
+    Document.getElementById("#"+e._id).style.display = "inline";
+    console.dir(Document.getElementById(e._id));
+    return false;
+}
 const removeNote = (e) => {
     e.preventDefault();
     

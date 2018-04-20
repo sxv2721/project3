@@ -1,5 +1,5 @@
 body {
-    background-color: #8F8B64;
+    background: linear-gradient(#58553B, #BAB68D, #58553B);
     font-family: 'Karla', sans-serif;
     color: #4F4424;
     
@@ -20,7 +20,7 @@ nav:nth-child(1) {
     padding: 5px;
     padding-top: 12px;
     padding-left: 20px;
-    color: white;
+    color: #4F4424;
     font-size: 14pt;
     float: left;
 }
@@ -67,6 +67,7 @@ Label {
 }
 input, textarea{
     margin-top: 10px;
+    margin-right: 5px;
     border-radius: 5px;
     padding: 5px;
     background-color: #E2DEBA;
@@ -86,6 +87,7 @@ input[type=submit]:hover {
     transition: background-color 0.8s ease;
     background-color: #8F8B64;
 }
+
 .noteList, #loginForm, #signupForm, #welcome {
     border-radius: 5px;
     padding: 10px;
@@ -105,4 +107,14 @@ input[type=submit]:hover {
     font-size: 14pt;
     font-weight: 100;
     margin-top:-20px;
+    display:none;
+}
+#bottombar{
+    position: sticky;
+    top:100;
+    color:#E2DEBA;
+}
+.reveal{
+    margin-bottom: -20px;
+    margin-top: -20px;
 }

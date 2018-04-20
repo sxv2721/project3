@@ -17,6 +17,9 @@ const changePage = (req, res) => {
 const aboutPage = (req, res) => {
   res.render('about', { csrfToken: req.csrfToken() });
 };
+const errorPage = (req, res) => {
+    res.render('error', { csrfToken: req.csrfToken()});
+}
 const logout = (req, res) => {
   req.session.destroy();
   res.redirect('/');
@@ -142,3 +145,4 @@ module.exports.logout = logout;
 module.exports.signup = signup;
 module.exports.getToken = getToken;
 module.exports.changePW = changePW;
+module.exports.errorPage = errorPage;

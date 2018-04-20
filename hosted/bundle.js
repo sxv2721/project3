@@ -85,9 +85,11 @@ var NoteList = function NoteList(props) {
             ),
             React.createElement(
                 "h2",
-                { className: "note" },
+                { className: "note", id: note._id },
                 notes.note
             ),
+            React.createElement("input", { type: "submit", value: "Show Note",
+                className: "reveal", onSubmit: showNote }),
             React.createElement("form", {
                 onSubmit: removeNote,
                 action: "/removeNote",
@@ -97,11 +99,17 @@ var NoteList = function NoteList(props) {
 
     return React.createElement(
         "div",
-        { className: "noteList" },
+        null,
         noteNodes
     );
 };
 
+var showNote = function showNote(e) {
+    e.preventDefault();
+    Document.getElementById("#" + e._id).style.display = "inline";
+    console.dir(Document.getElementById(e._id));
+    return false;
+};
 var removeNote = function removeNote(e) {
     e.preventDefault();
 
