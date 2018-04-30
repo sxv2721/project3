@@ -114,7 +114,8 @@ input[type=submit]:hover {
     top:100;
     color:#E2DEBA;
 }
-.reveal{
+.reveal, .remove{
     margin-bottom: -20px;
     margin-top: -20px;
+    display:inline;
 }

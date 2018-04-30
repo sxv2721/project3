@@ -18,8 +18,8 @@ const aboutPage = (req, res) => {
   res.render('about', { csrfToken: req.csrfToken() });
 };
 const errorPage = (req, res) => {
-    res.render('error', { csrfToken: req.csrfToken()});
-}
+  res.render('error', { csrfToken: req.csrfToken() });
+};
 const logout = (req, res) => {
   req.session.destroy();
   res.redirect('/');

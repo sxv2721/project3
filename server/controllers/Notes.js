@@ -53,28 +53,28 @@ const getNotes = (request, response) => {
       console.log(err);
       return res.status(400).json({ error: 'An error occurred' });
     }
-    console.log(docs);
+    // console.log(docs);
     return res.json({ notes: docs });
   });
 };
-/*
-const removeNote = (request, response) => {
-    const req = request;
-    const res = response;
 
-    return Notes.NoteModel.findByIdAndRemove(req.params._id, (err, docs) => {
-        if(err) {
-            console.log(err);
-            return res.status(400).json({ error: 'An error occurred'});
-        }
-        const response = {
-            message: "Note successfully deleted",
-            id: docs._id,
-        }
-        return res.json(response);
-    });
+const removeNote = (request, response) => {
+  const req = request;
+  const res = response;
+
+  return Notes.NoteModel.findByIdAndRemove({ _id: req.body.id }, (err, docs) => {
+    if (err) {
+      console.log(err);
+      return res.status(400).json({ error: 'An error occurred' });
+    }
+    const responseJSON = {
+      message: 'Note successfully deleted',
+      id: docs._id,
+    };
+    return res.json(responseJSON);
+  });
 };/**/
 module.exports.makerPage = makerPage;
 module.exports.getNotes = getNotes;
 module.exports.make = makeNote;
-// module.exports.remove = removeNote;
+module.exports.remove = removeNote;
